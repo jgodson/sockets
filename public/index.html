@@ -3,12 +3,19 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Socket.io Basics</title>
+		<link rel="stylesheet" href="/stylesheets/style.css" />
 	</head>
 	<body>
-		<form id="message-form">
-			<input type="text" name="message" />
-			<input type="submit" />
-		</form>
+		<div id="messages">
+			<div id="received"></div>
+			<div id="sent"></div>
+		</div>
+		<div id="form">
+			<form id="message-form">
+				<input type="text" name="message" />
+				<input type="submit" />
+			</form>
+		</div>
 		
 		<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>

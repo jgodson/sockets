@@ -2,7 +2,8 @@ var socket = io();
 
 socket.on('connect', function () {
 	socket.on('message', function(message) {
-		console.log("Message : " + message.text);
+		$('#received').append("<p class='message received'>" + message.text + "</p>");
+		console.log(message.text);
 	});
 });
 
@@ -11,10 +12,12 @@ var $form = jQuery('#message-form');
 var messageBox = $form.find('input[name=message]');
 $form.on('submit', function(event) {
 	event.preventDefault();
-	if (messageBox.val() !== "") {
+	var sentMessage = messageBox.val();
+	if (sentMessage !== "") {
 		socket.emit('message', {
-			text: messageBox.val()
+			text: sentMessage
 		});
 	}
+	$('#sent').append("<p class='message sent'>" + sentMessage + "</p>");
 	messageBox.val("");
 });

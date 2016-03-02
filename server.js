@@ -6,8 +6,15 @@ var server = express();
 var http = require('http').Server(server);
 var io = require('socket.io')(http);
 
-io.on('connection', function() {
+io.on('connection', function(socket) {
 	console.log("User connected via socket.io");
+	
+	socket.on('message', function(message) {
+		console.log("Got message");
+		socket.broadcast.emit('message', message);
+	});
+	
+	
 });
 
 server.use(express.static(__dirname + "/public"));

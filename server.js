@@ -20,6 +20,19 @@ io.on('connection', function(socket) {
 		timestamp: moment()
 	});
 	
+	socket.on('disconnect', function() {
+		if (typeof clientInfo[socket.id] !== 'undefined') {
+			var userData = clientInfo[socket.id];
+			socket.leave(userData.room);
+			socket.broadcast.to(userData.room).emit('message', {
+				name: "System",
+				text: userData.name + " has left the room",
+				timestamp: moment()
+			});
+			delete clientInfo[socket.id];
+		}
+	});
+	
 	socket.on('joinRoom', function(req) {
 		clientInfo[socket.id] = req;
 		socket.join(req.room);

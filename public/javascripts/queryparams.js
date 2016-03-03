@@ -6,7 +6,7 @@ function getQueryParams() {
 		var queryObj = {};
 		queries.forEach(function(query) {
 			query = query.split('=');
-			queryObj[decodeURIComponent(query[0])] = decodeURIComponent(query[1]);
+			queryObj[decodeURIComponent(query[0])] = decodeURIComponent(query[1].replace(/\+/g, " "));
 		});
 		return queryObj;
 	}

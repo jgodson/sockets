@@ -1,33 +1,45 @@
 var socket = io();
-var params = getQueryParams() || {name : "Anonymous"};
-$sent = $('#sent');
-$received = $('#received');
+var params = getQueryParams() || {name : "Anonymous",
+								  room: "General"};
+if (params.name === '') {
+	params.name = "Anonymous";
+}
+if (params.room === '') {
+	params.room = "General";
+}
 
+$('#room-details').append("<h3>Welcome to the " + params.room + " chat room</h3>");
+
+var $messages = $('#messages')
 socket.on('connect', function () {
-	socket.on('message', function(message) {
-		message.timestamp = moment(message.timestamp);
-		$received.append("<p class='message received'><strong>" + message.name +"</strong> @ <strong>" 
-		+ message.timestamp.local().format('h:mm a') + "</strong>:<br>"+ message.text + "</p>");
-		$sent.append("<p class='message empty'>\n" + message.text + "</p>");
+	socket.emit('joinRoom', {
+		name: params.name,
+		room: params.room 
 	});
+});
+
+socket.on('message', function(message) {
+	message.timestamp = moment(message.timestamp);
+	$messages.append("<p class='message received'><strong>" + message.name + " @ " 
+	+ message.timestamp.local().format('h:mm a') + "</strong>:<br>"+ message.text + "</p>");
+	$messages.animate({scrollTop: $messages.prop("scrollHeight")}, 500);
 });
 
 // Handles submitting of messages
 var $form = jQuery('#message-form');
-var messageBox = $form.find('input[name=message]');
+var $messageBox = $form.find('input[name=message]');
 $form.on('submit', function(event) {
 	event.preventDefault();
 	var timestamp = moment();
-	var sentMessage = messageBox.val();
+	var sentMessage = $messageBox.val();
 	if (sentMessage !== "") {
 		socket.emit('message', {
 			name: params.name,
-			text: sentMessage,
-			timestamp: timestamp
+			text: sentMessage
 		});
-		$received.append("<p class='message empty'>" + sentMessage + "</p>");
-		$sent.append("<p class='message sent'><strong>" + timestamp.local().format('h:mm a') + "</strong>: "
+		$messages.append("<p class='message sent'><strong>You @ " + timestamp.format('h:mm a') + "</strong>:<br>"
 			+ sentMessage + "</p>");
-		messageBox.val("");
+		$messageBox.val("");
+		$messages.animate({scrollTop: $messages.prop("scrollHeight")}, 500);
 	}
 });

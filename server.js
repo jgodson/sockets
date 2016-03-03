@@ -5,12 +5,14 @@ var express = require('express');
 var server = express();
 var http = require('http').Server(server);
 var io = require('socket.io')(http);
+var moment = require('moment');
+
+var now = moment();
 
 io.on('connection', function(socket) {
 	console.log("User connected via socket.io");
 	
 	socket.on('message', function(message) {
-		console.log("Got message");
 		socket.broadcast.emit('message', message);
 	});
 	

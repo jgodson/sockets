@@ -2,6 +2,7 @@ html, body {
 	background-color : black;
 	height: 100%;
 	width: 100%;
+	color: white;
 }
 
 #messages {
@@ -11,8 +12,9 @@ html, body {
 }
 
 .message {
+	border: white 1px solid;
 	border-radius: 10px;
-	width: 90%;
+	width: 95%;
 	padding: 5px;
 }
 
@@ -22,6 +24,12 @@ html, body {
 
 .received {
 	background-color: rgba(74, 159, 249, 0.8);
+}
+
+.empty {
+	background-color: black;
+	color: black;
+	border: black;	
 }
 
 #sent {
@@ -43,5 +51,9 @@ html, body {
 }
 
 #message-form {
-	width: 70%;
+	width: 90%
+}
+
+#textBox{
+	width: 100%;
 }

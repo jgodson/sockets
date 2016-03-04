@@ -11,24 +11,66 @@ var now = moment();
 
 var clientInfo = {};
 
-io.on('connection', function(socket) {
-	console.log("User connected via socket.io");
+function sendCurrentUsers (socket) {
+	var info = clientInfo[socket.id];
+	var users = [];
+	if (typeof info === 'undefined') {
+		return;
+	}
+	
+	Object.keys(clientInfo).forEach(function(socketID) {
+		var userInfo = clientInfo[socketID];
+		if (info.room === userInfo.room) {
+			users.push(userInfo.name);
+		}
+	});
 	
 	socket.emit('message', {
-		name: "System",
-		text: "Welcome to the chat application!",
+		name: 'System',
+		text: "Current users: " + users.join(', '),
 		timestamp: moment()
-	});
+	})
+	
+}
+
+function systemMessage (socket, msg, name, room) {
+	// If room not given emit message instead of broadcast to specific room
+	// @msg - message to send @name name of receiver @room room the receiver is in
+	if (typeof room !== 'undefined') {
+		socket.broadcast.to(room).emit('message', {
+			name: "System",
+			text: name + " " + msg,
+			timestamp: moment()
+		});
+	}
+	else {
+		socket.emit('message', {
+		name: "System",
+		text: msg,
+		timestamp: moment()
+		});
+	}
+}
+
+io.on('connection', function(socket) {
+	console.log("User connected via socket.io");
+	systemMessage(socket, "Welcome to the chat application");
+	// socket.emit('message', {
+	// 	name: "System",
+	// 	text: "Welcome to the chat application!",
+	// 	timestamp: moment()
+	// });
 	
 	socket.on('disconnect', function() {
 		if (typeof clientInfo[socket.id] !== 'undefined') {
 			var userData = clientInfo[socket.id];
 			socket.leave(userData.room);
-			socket.broadcast.to(userData.room).emit('message', {
-				name: "System",
-				text: userData.name + " has left the room",
-				timestamp: moment()
-			});
+			systemMessage(socket, "has left the room", userData.name, userData.room);
+			// socket.broadcast.to(userData.room).emit('message', {
+			// 	name: "System",
+			// 	text: userData.name + " has left the room",
+			// 	timestamp: moment()
+			// });
 			delete clientInfo[socket.id];
 		}
 	});
@@ -36,16 +78,22 @@ io.on('connection', function(socket) {
 	socket.on('joinRoom', function(req) {
 		clientInfo[socket.id] = req;
 		socket.join(req.room);
-		socket.broadcast.to(req.room).emit('message', {
-			name: "System",
-			text: req.name + " has joined the room",
-			timestamp: moment()
-		});
+		systemMessage(socket, "has joined the room", req.name, req.room);
+		// socket.broadcast.to(req.room).emit('message', {
+		// 	name: "System",
+		// 	text: req.name + " has joined the room",
+		// 	timestamp: moment()
+		// });
 	});
 	
 	socket.on('message', function(message) {
-		message.timestamp = moment();
-		socket.broadcast.to(clientInfo[socket.id].room).emit('message', message);
+		if (message.text.toLowerCase() === "@currentusers") {
+			sendCurrentUsers(socket);
+		}
+		else {
+			message.timestamp = moment();
+			socket.broadcast.to(clientInfo[socket.id].room).emit('message', message);
+		}
 	});
 	
 	

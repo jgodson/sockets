@@ -54,23 +54,13 @@ function systemMessage (socket, msg, name, room) {
 
 io.on('connection', function(socket) {
 	console.log("User connected via socket.io");
-	systemMessage(socket, "Welcome to the chat application");
-	// socket.emit('message', {
-	// 	name: "System",
-	// 	text: "Welcome to the chat application!",
-	// 	timestamp: moment()
-	// });
-	
+	systemMessage(socket, "Welcome to the chat application. To see users currently in the room" + 
+	" type @currentusers");
 	socket.on('disconnect', function() {
 		if (typeof clientInfo[socket.id] !== 'undefined') {
 			var userData = clientInfo[socket.id];
 			socket.leave(userData.room);
 			systemMessage(socket, "has left the room", userData.name, userData.room);
-			// socket.broadcast.to(userData.room).emit('message', {
-			// 	name: "System",
-			// 	text: userData.name + " has left the room",
-			// 	timestamp: moment()
-			// });
 			delete clientInfo[socket.id];
 		}
 	});
@@ -79,11 +69,6 @@ io.on('connection', function(socket) {
 		clientInfo[socket.id] = req;
 		socket.join(req.room);
 		systemMessage(socket, "has joined the room", req.name, req.room);
-		// socket.broadcast.to(req.room).emit('message', {
-		// 	name: "System",
-		// 	text: req.name + " has joined the room",
-		// 	timestamp: moment()
-		// });
 	});
 	
 	socket.on('message', function(message) {

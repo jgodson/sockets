@@ -5,6 +5,7 @@ html, body {
 
 #room-details {
 	width: 100%;
+	text-align: center;
 }
 
 #messages {
@@ -15,13 +16,17 @@ html, body {
 	margin: 0 auto;
 }
 
+.well {
+	margin-bottom: 0;
+}
+
 .message {
 	border: black 1px solid;
 	border-radius: 10px;
-	width: 95%;
-	margin: 0 auto;
-	margin-top: 4px;
-	margin-bottom: 4px;
+	/*width: 95%;
+	margin: 0 auto;*/
+	margin-top: 3px;
+	margin-bottom: 3px;
 	padding: 5px;
 }
 
@@ -40,15 +45,6 @@ html, body {
 	align-items: center;
 }
 
-#form {
-	width: 100%;
-}
-
-#message-form {
-	width: 90%;
-	float: left;
-}
-
-#change-details {
-	float: right;
+a:hover {
+	text-decoration: none;
 }

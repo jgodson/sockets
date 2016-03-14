@@ -1,9 +1,9 @@
 var socket = io();
-var params = getQueryParams() || {name : "Anonymous",
+var params = getQueryParams() || {name : "",
 								  room: "General"};
 								  
 if (params.name === '') {
-	params.name = "Anonymous";
+	params.name = "User" + Math.floor(Math.random() * 10000);
 }
 if (params.room === '') {
 	params.room = "General";

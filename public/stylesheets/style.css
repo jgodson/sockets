@@ -23,8 +23,6 @@ html, body {
 .message {
 	border: black 1px solid;
 	border-radius: 10px;
-	/*width: 95%;
-	margin: 0 auto;*/
 	margin-top: 3px;
 	margin-bottom: 3px;
 	padding: 5px;

@@ -24,7 +24,7 @@ socket.on('connect', function () {
 
 socket.on('message', function(message) {
 	message.timestamp = moment(message.timestamp);
-	$messages.append("<p class='col-sm-8 col-sm-offset-2 message received'><strong>" + message.name + " @ " 
+	$messages.append("<p class='col-xs-12 col-sm-8 col-sm-offset-2 message received'><strong>" + message.name + " @ " 
 	+ message.timestamp.local().format('h:mm a') + "</strong>:<br>"+ message.text + "</p>");
 	$messages.animate({scrollTop: $messages.prop("scrollHeight")}, 500);
 });
@@ -41,9 +41,21 @@ $form.on('submit', function(event) {
 			name: params.name,
 			text: sentMessage
 		});
-		$messages.append("<p class='col-sm-8 col-sm-offset-2 message sent'><strong>You @ " + timestamp.format('h:mm a') + "</strong>:<br>"
+		$messages.append("<p class='col-xs-12 col-sm-8 col-sm-offset-2 message sent'><strong>You @ " + timestamp.format('h:mm a') + "</strong>:<br>"
 			+ sentMessage + "</p>");
 		$messageBox.val("");
 		$messages.animate({scrollTop: $messages.prop("scrollHeight")}, 500);
 	}
 });
+
+// Adjust height of message div when resizing window
+window.onresize = function () {
+resizeMessages();
+}
+
+function resizeMessages () {
+	$messages.height(window.innerHeight - $('#form').outerHeight() - $('#room-details').outerHeight());
+}
+
+// Adjust height of message div on load
+$(document).ready(resizeMessages());

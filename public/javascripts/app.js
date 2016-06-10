@@ -14,7 +14,7 @@ params.room = params.room.replace(/[&{}\[\]=+()%`<>"\/]/g, "*");
 
 $('#room-details').append("<p>Welcome to the " + params.room + " chat room</p>");
 
-var $messages = $('#messages')
+var $messages = $('#messages');
 socket.on('connect', function () {
 	socket.emit('joinRoom', {
 		name: params.name,

@@ -23,8 +23,9 @@ socket.on('connect', function () {
 });
 
 socket.on('message', function(message) {
+	var messageType = message.name == "System" ? 'system' : 'received';
 	message.timestamp = moment(message.timestamp);
-	$messages.append("<p class='col-xs-12 col-sm-8 col-sm-offset-2 message received'><strong>" + message.name + " @ " 
+	$messages.append("<p class='col-xs-12 col-sm-8 col-sm-offset-2 message " + messageType + "'><strong>" + message.name + " @ " 
 	+ message.timestamp.local().format('h:mm a') + "</strong>:<br>"+ message.text + "</p>");
 	$messages.animate({scrollTop: $messages.prop("scrollHeight")}, 500);
 });

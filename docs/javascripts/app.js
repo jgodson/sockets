@@ -1,4 +1,4 @@
-var socket = io();
+var socket = io('https://socket-server-jgodson.herokuapp.com');
 var params = getQueryParams() || {name : "",
 								  room: "General"};
 								  

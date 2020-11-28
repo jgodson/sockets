@@ -44,6 +44,10 @@ html, body {
 	background-color: rgba(74, 159, 249, 0.8);
 }
 
+.system {
+	background-color: rgba(197, 197, 197, 0.8);
+}
+
 .vertical-center {
 	min-height: 100vh;
 	margin: 0;

@@ -1,35 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Socket.io Basics</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-		<link rel="stylesheet" href="./stylesheets/style.css" />
-	</head>
-	<body>
-		<div id="room-details" class="well"></div>
-		<div id="messages"></div>
-		<div id="form" class="col-xs-12 col-sm-8 col-sm-offset-2">
-			<form id="message-form">
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
-						<input class="form-control" id="textbox" type="text" name="message" />
-						<span class="input-group-btn">
-							<input class="btn btn-success" type="submit" value="Send">
-						</span>
-					</div>
-				</div>
-			</form>
-		</div>
-		
-		<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-		<script src="./javascripts/moment.min.js"></script>
-		<script src="./javascripts/queryparams.js"></script>
-		<script src="./javascripts/app.js"></script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Socket.io Basics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="./stylesheets/style.css" />
+  </head>
+  <body>
+    <div id="room-details" class="well"></div>
+    <div id="messages"></div>
+    <div id="form" class="col-xs-12 col-sm-8 col-sm-offset-2">
+      <form id="message-form">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon"
+              ><i class="glyphicon glyphicon-comment"></i
+            ></span>
+            <input
+              class="form-control"
+              id="textbox"
+              type="text"
+              name="message"
+            />
+            <span class="input-group-btn">
+              <input class="btn btn-success" type="submit" value="Send" />
+            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="./javascripts/moment.min.js"></script>
+    <script src="./javascripts/queryparams.js"></script>
+    <script src="./javascripts/app.js"></script>
+  </body>
 </html>
